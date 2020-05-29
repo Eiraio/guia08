@@ -11,8 +11,21 @@ public class Tarea {
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private Boolean facturada;
-	
-	public void asignarEmpleado(Empleado e) {
+
+	public Tarea(Integer id, String descripcion, Integer duracionEstimada, Empleado emp) {
+		this.id = id;
+		this.descripcion = descripcion;
+		this.duracionEstimada = duracionEstimada;
+		this.empleadoAsignado = emp;
+	}
+
+	public void asignarEmpleado(Empleado e) throws empleadoAsignadoException{
+		if(empleadoAsignado != null && fechaFin != null){
+			throw new empleadoAsignadoException();
+		}else{
+			empleadoAsignado=e;
+		}
+
 		// si la tarea ya tiene un empleado asignado
 		// y tiene fecha de finalizado debe lanzar una excepcion
 	}
@@ -69,5 +82,7 @@ public class Tarea {
 		return empleadoAsignado;
 	}
 	
-	
+	public String asCsv(){
+		return this.id + "," + this.descripcion + ";" + this.duracionEstimada + "," + this.empleadoAsignado.getCuil() + "," + this.empleadoAsignado.getNombre()  + "," + this.fechaInicio + "," + this.fechaFin;
+	}
 }
